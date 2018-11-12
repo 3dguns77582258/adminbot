@@ -1,11 +1,13 @@
-from telegram.ext import CommandHandler, Updater
+from telegram.ext import CommandHandler, MessageHandler, Updater, Filters
 from vote import kick
+from clear import clear_message
+from filters import status_update
 
 
 class AdminBot():
     def __init__(self, token):
         self.updater = Updater(token=token)
-        self.dispatcher = self.updater.dispatcher
+        self.dp = self.updater.dispatcher
 
     def error(self, bot, update, error):
         try:
@@ -14,6 +16,7 @@ class AdminBot():
             print(e)
 
     def run(self):
-        self.dispatcher.add_handler(CommandHandler('kick', kick))
-        self.dispatcher.add_error_handler(self.error)
+        self.dp.add_handler(CommandHandler('kick', kick))
+        self.dp.add_handler(MessageHandler(status_update, clear_message))
+        self.dp.add_error_handler(self.error)
         self.updater.start_polling()
