@@ -185,26 +185,26 @@ def vote(bot, update):
             text=base_text,
             reply_markup=menu_keyboard(key, kick_user.agree_counter(), kick_user.disagree_counter()))
 
-        if kick_user.vote_counter() == max_vote:
-            if kick_user.agree_counter() > kick_user.disagree_counter():
-                text = '经投票,同意移除【{}】'.format(kick_user.name)
-                bot.kick_chat_member(kick_user.chat_id, kick_user.user_id)
-            else:
-                text = '经投票,不同意移除【{}】,已恢复该用户所有权限'.format(kick_user.name)
-                bot.restrict_chat_member(
-                    kick_user.chat_id,
-                    kick_user.user_id,
-                    can_send_messages=True,
-                    can_send_media_messages=True,
-                    can_send_other_messages=True,
-                    can_add_web_page_previews=True
-                )
+    elif kick_user.vote_counter() == max_vote:
+        if kick_user.agree_counter() > kick_user.disagree_counter():
+            text = '经投票,同意移除【{}】'.format(kick_user.name)
+            bot.kick_chat_member(kick_user.chat_id, kick_user.user_id)
+        else:
+            text = '经投票,不同意移除【{}】,已恢复该用户所有权限'.format(kick_user.name)
+            bot.restrict_chat_member(
+                kick_user.chat_id,
+                kick_user.user_id,
+                can_send_messages=True,
+                can_send_media_messages=True,
+                can_send_other_messages=True,
+                can_add_web_page_previews=True
+            )
 
-                bot.edit_message_text(
-                    message_id=msg.message_id,
-                    chat_id=msg.chat.id,
-                    text=text,
-                    reply_markup=delete_keyboard(key))
+            bot.edit_message_text(
+                message_id=msg.message_id,
+                chat_id=msg.chat.id,
+                text=text,
+                reply_markup=delete_keyboard(key))
 
 # 绑定kick,当有人点击kick时,返回投票窗口
 # dispatcher.add_handler(CommandHandler('kick', kick))
