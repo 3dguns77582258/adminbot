@@ -202,11 +202,11 @@ def vote(bot, update):
                     can_add_web_page_previews=True
                 )
 
-                bot.edit_message_text(
-                    message_id=msg.message_id,
-                    chat_id=msg.chat.id,
-                    text=text,
-                    reply_markup=delete_keyboard(key))
+            bot.edit_message_text(
+                message_id=msg.message_id,
+                chat_id=msg.chat.id,
+                text=text,
+                reply_markup=delete_keyboard(key))
 
 # 绑定kick,当有人点击kick时,返回投票窗口
 # dispatcher.add_handler(CommandHandler('kick', kick))
