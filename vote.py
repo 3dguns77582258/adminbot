@@ -178,7 +178,6 @@ def vote(bot, update):
             return
         else:
             bot.answer_callback_query(query.id, "投票成功")
-            return
 
         logging.info(kick_user.log())
 
