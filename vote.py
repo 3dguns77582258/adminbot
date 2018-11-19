@@ -176,6 +176,9 @@ def vote(bot, update):
         if not (ret_agree and ret_disagree):
             bot.answer_callback_query(query.id, "请勿重复投票")
             return
+        else:
+            bot.answer_callback_query(query.id, "投票成功")
+            return
 
         logging.info(kick_user.log())
 
