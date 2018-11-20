@@ -1,7 +1,10 @@
+import logging
 from telegram.ext import CommandHandler, MessageHandler, Updater, Filters, CallbackQueryHandler
+
 from vote import kick, vote
 from clear import clear_message
 from filters import status_update
+from start import start
 
 
 class AdminBot():
@@ -13,9 +16,10 @@ class AdminBot():
         try:
             raise error
         except BaseException as e:
-            print(e)
+            logging.error(e)
 
     def run(self):
+        self.dp.add_handler(CommandHandler('start', start))
         self.dp.add_handler(CommandHandler('kick', kick))
         self.dp.add_handler(CallbackQueryHandler(vote))
         self.dp.add_handler(MessageHandler(status_update, clear_message))
